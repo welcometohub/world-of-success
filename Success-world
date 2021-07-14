@@ -1,13 +1,13 @@
 
+
 #Success-World
-[Success-World]
+[Success-World](https://access-academy.herokuapp.com/)
 
 ## What is Success-World?
 
 Success-World is a place where users can design courses for others or design their own learning path.  Users might be looking to gain a new skill or study for a professional certification exam. A customized learning path allows a user to curate material that is most relevant for them and leave out material they are already comfortable with.
 
 ## Get Started Using Success-World
-
 
 ### Try it out.
 To explore the features of this site without creating an account, navigate to the homepage and click on the "demo account" link to access a pre-made demo account.
@@ -86,9 +86,7 @@ Ideally, the videos would be embedded on the site and playable from there withou
 ### Site design
 The site uses a simple, clean design intentionally to keep the focus on the content.
 
-
 The color blue was chosen because it is associated with reliability and symbolizes wisdom. Success-World wants to be seen as a trusted site for gaining knowledge and skills, so this was a great color choice in that regard. Blue is also known to have a calming effect on people, which is helpful when a person is trying to learn new things.
-
 
 ## Inspiration for this site
 
@@ -130,4 +128,4 @@ API_SECRET_KEY = "<<insert_key_string_here>>"
 * Run the seed file to populate the database with users and (empty) courses:
   ```
   python seed.py 
-  ```       
+  ```
