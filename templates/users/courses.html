@@ -1,0 +1,63 @@
+<!-- LOGGED IN USERS ONLY:
+This page will show:
+* for ALL USERS: a list of courses the user has created
+-->
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mb-4">
+  <h1>My Courses</h1>
+</div>
+<div class="row justify-content-center mb-4">
+  <p class="h4 text-center mb-2">Click on a course image to be taken to the list of videos in the course.</p>
+</div>
+
+<!-- Courses will be rendered by Flask server. -->
+{% for course in courses %}
+<div class="card mb-3">
+  <div class="row no-gutters justify-content-center">
+    <div class="col-8 col-md-4 image-container">
+      <a href="/courses/{{ course.id }}/details">
+        <!-- Course Image -->
+        {% if (course.videos | length) == 0 %}
+        <img src="../static/images/https://www.youtube.com/watch?v=Q33KBiDriJY.jpg" class="course-img" alt="">
+        {% elif course.videos[0].thumb_url %}
+        <img src="{{course.videos[0].thumb_url}}" class="course-img" alt="">
+        {% else %}
+        <img src="../static/images/https://www.youtube.com/watch?v=Q33KBiDriJY.jpg" class="course-img" alt="">
+        {% endif %}
+      </a>
+    </div>
+    <div class="col-8 col-md-8">
+      <div class="card-body">
+        <!-- Course title & description -->
+        <h5 class="card-title">{{course.title}}</h5>
+        {% if course.description %}
+        <p class="card-text">{{course.description}}</p>
+        {% endif %}
+        <p class="card-text">
+          {% if (course.videos | length) == 0 %}
+          <small class="text-muted">(Image by
+            <a
+              href="https://pixabay.com/users/peggy_marco-1553824/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Peggy
+              und Marco Lachmann-Anke</a> from <a
+              href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Pixabay)
+            </a>
+          </small class="text-muted">
+          {% elif not course.videos[0].thumb_url %}
+          <small>(Image by
+            <a
+              href="https://pixabay.com/users/peggy_marco-1553824/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Peggy
+              und Marco Lachmann-Anke</a> from <a
+              href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Pixabay)
+            </a>
+          </small>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+{% endblock %}

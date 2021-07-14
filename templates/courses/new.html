@@ -1,0 +1,30 @@
+<!-- LOGGED IN USERS ONLY
+  * This page will show the form to add a new course and allow the creator to select courses to add. 
+  * The route to this page should pass the creator_id variable.
+  * After a new course is saved, the page needs to have access to the course id.  So... re-render the page and pass the course id?-->
+{% extends 'base.html' %}
+{% block content %}
+<!-- Create a course -->
+<div class="row justify-content-center mb-4">
+  <h1>Create a course</h1>
+</div>
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <p class="h3 text-center mb-5">
+      Step 1: Enter a course title and description.
+    </p>
+    <p>After submitting, you will be taken to a site where you can search for videos to add to the course.</p>
+    <form method="POST" id="user_form">
+      {{ form.hidden_tag() }}
+
+      {% for field in form if field.widget.input_type != 'hidden' %}
+      {% for error in field.errors %}
+      <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+      {{ field(placeholder=field.label.text, class="form-control mb-3") }}
+      {% endfor %}
+      <button class="btn btn-primary btn-lg">Add course</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

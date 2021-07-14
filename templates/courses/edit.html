@@ -1,0 +1,85 @@
+<!-- LOGGED IN USERS ONLY
+  * This page will allow the course creator to edit the course (add/remove videos or reorder videos).
+
+  * After course edits have been made, redirect to course details page.-->
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col">
+    <h1 class="mt-4 mb-5">Modify a course</h1>
+    <p class="h4 my-3">Add, remove, or reorder videos in the course:
+      <i>{{ course.title }}</i>
+    </p>
+    <p class="h4 my-3"><a href="/courses/{{ course.id }}/details">View the videos</a> in this course.</p>
+    <p class="h4 my-3"><a href="./videos/search">Search for videos</a> to add to the course.</p>
+    <p class="h4 my-3">Remove or reorder the videos using the buttons on each video.</p>
+  </div>
+</div>
+{% if videos_courses %}
+{% for vc in videos_courses %}
+<div class="card mb-3">
+  <div class="row no-gutters justify-content-center">
+    <div class="col-8 col-md-4 image-container">
+      <!-- Course Image -->
+      <!-- CHANGE: remove this line when replacing thumbnail with iframe -->
+      <a href="https://www.youtube.com/watch?v={{ vc.video.yt_video_id }}" target="_blank" rel="noreferrer noopener">
+        <img src="{{ vc.video.thumb_url }}" class="img-fluid searched-item"
+          alt="thumbnail of video: {{ vc.video.title }}">
+      </a>
+      <!-- CHANGE: uncomment and turn into a variable to show iframe -->
+      <!-- video.iframe -->
+    </div>
+    <div class="col-8 col-md-8">
+      <div class="card-body card-body-style">
+        <!-- Course title & description -->
+        <p class="card-title h5">{{ vc.video.title}}</p>
+        <p class="card-subtitle mb-2">Created by: {{ vc.video.yt_channel_title}}</p>
+        <p class="card-text">{{ vc.video.description }}</p>
+      </div>
+      <div class="card-footer card-footer-style">
+        <div class="row mb-2 align-items-end justify-content-start btn-container">
+          <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+            <!-- form for up arrow (sequence minus 1) -->
+            {% if vc.video_seq != 1 %}
+            <form action="/courses/{{ course.id }}/videos/resequence" class="d-inline" method="POST">
+              <input type="hidden" name="course-id" value={{course.id}}>
+              <input type="hidden" name="vc-id" value={{vc.id}}>
+              <input type="hidden" name="video-seq" value={{vc.video_seq}}>
+              <input type="hidden" name="arrow" value="-1">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-up"></i></button>
+            </form>
+            {% endif %}
+            <!-- form for down arrow (sequence plus 1) -->
+            {% if vc.video_seq != (videos_courses | length) %}
+            <form action="/courses/{{ course.id }}/videos/resequence" class="d-inline ml-2" method="POST">
+              <input type="hidden" name="course-id" value={{course.id}}>
+              <input type="hidden" name="vc-id" value={{vc.id}}>
+              <input type="hidden" name="video-seq" value={{vc.video_seq}}>
+              <input type="hidden" name="arrow" value="1">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-down"></i></button>
+            </form>
+            {% endif %}
+          </div>
+          <div class="col-6 col-sm-4 col-lg-3">
+            <!-- CHANGE: is curr-video-seq still needed? -->
+            <form action="/courses/{{ course.id }}/videos/remove" class="d-inline" method="POST">
+              <input type="hidden" name="course-id" value={{course.id}}>
+              <input type="hidden" name="video-seq" value={{vc.video_seq}}>
+              <input type="hidden" name="video-id" value={{vc.video.id}}>
+              <button type="submit" class="btn btn-primary btn-danger">Remove</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h3 class="text-warning mt-4 mb-5">The course <em>{{course.title}}</em> currently has no videos in it.</h3>
+<form action="/courses/{{course.id}}/videos/search">
+  <button type="submit" class="btn btn-primary btn-lg">Search videos</button>
+</form>
+{% endif %}
+{% endblock %}

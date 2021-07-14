@@ -1,0 +1,38 @@
+.first-body-container {
+  margin-top: 70.375px;
+}
+
+.svg {
+  max-width: 45%;
+  height: auto;
+}
+
+/* Nav */
+.nav-user-img {
+  width: 32px;
+  border-radius: 50%;
+}
+
+.image-container {
+  object-fit: cover;
+  overflow: hidden;
+}
+
+/* "Cards": Video titles and descriptions */
+.course-img {
+  max-height: 280px;
+  max-width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+}
+
+.card-footer-style {
+  border-top: none;
+}
+
+body{
+  background-image: url(https://th.bing.com/th/id/OIP.H_VovgudRzpNZmnfwOa4DgHaDF?w=349&h=145&c=7&o=5&dpr=1.25&pid=1.7);
+    
+background-size: cover;
+ 
+}

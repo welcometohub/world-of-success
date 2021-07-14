@@ -1,0 +1,26 @@
+<!-- LOGGED OUT USERS ONLY:
+  This page will show the user login form. -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mb-4">
+  <h1>Success World</h1>
+</div>
+<div class="row justify-content-md-center">
+  <div class="col-md-7 col-lg-5">
+    <p class="h3 join-message text-center mb-5">Welcome back To Success World.</p>
+
+    <form method="POST" id="user_form">
+      {{ form.hidden_tag() }}
+
+      {% for field in form if field.widget.input_type != 'hidden' %}
+      {% for error in field.errors %}
+      <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+      {{ field(placeholder=field.label.text, class="form-control mb-3") }}
+      {% endfor %}
+
+      <button class="btn btn-primary btn-block btn-lg">Log in</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

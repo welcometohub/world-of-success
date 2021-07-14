@@ -1,0 +1,80 @@
+<!-- LOGGED IN USERS ONLY
+  * This page will allow a user to search for courses by word or phrase in course title.
+-->
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mb-4">
+  <h1>Courses Search</h1>
+</div>
+<div class="row justify-content-md-center">
+  <div class="col-md-8">
+    <form method="POST">
+      <div class="form-group">
+        {{ form.hidden_tag() }}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        {% for error in field.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        {{ field(placeholder=field.label.text, class="form-control mb-3") }}
+        {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-lg-3 mb-5">
+          <button class="btn btn-primary btn-lg btn-block">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Courses will be rendered by Flask server. -->
+{% for course in courses %}
+<div class="card mb-3">
+  <div class="row no-gutters justify-content-center">
+    <div class="col-8 col-md-4 image-container">
+      <a href="/courses/{{ course.id }}/details">
+        <!-- Course Image -->
+        {% if (course.videos | length) == 0 %}
+        <img src="../static/images/https://www.youtube.com/watch?v=Q33KBiDriJY.jpg" class="course-img" alt="">
+        {% elif course.videos[0].thumb_url %}
+        <img src="{{course.videos[0].thumb_url}}" class="course-img" alt="">
+        {% else %}
+        <img src="../static/images/https://www.youtube.com/watch?v=Q33KBiDriJY.jpg" class="course-img" alt="">
+        {% endif %}
+      </a>
+    </div>
+    <div class="col-8 col-md-8">
+      <div class="card-body">
+        <!-- Course title & description -->
+        <h5 class="card-title">{{course.title}}</h5>
+        {% if course.description %}
+        <p class="card-text">{{course.description}}</p>
+        {% endif %}
+        <p class="card-text">
+          {% if (course.videos | length) == 0 %}
+          <small class="text-muted">(Image by
+            <a
+              href="https://pixabay.com/users/peggy_marco-1553824/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Peggy
+              und Marco Lachmann-Anke</a> from <a
+              href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Pixabay)
+            </a>
+          </small class="text-muted">
+          {% elif not course.videos[0].thumb_url %}
+          <small>(Image by
+            <a
+              href="https://pixabay.com/users/peggy_marco-1553824/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Peggy
+              und Marco Lachmann-Anke</a> from <a
+              href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1015308">Pixabay)
+            </a>
+          </small>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %}
+{% endblock %}

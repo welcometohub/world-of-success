@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-3 mb-5">
+  <div class="col">
+    <h1 class="top-section mb-5">Video Search</h1>
+    <p class="h4 my-4">Step 2. Search for a video to add to the course <i>{{ course.title }}</i></p>
+    <p class="h4 my-4">You can also view<a href="/courses/{{ course.id }}/details"> all videos</a> in the course.</p>
+    <form id="keyword-search-form">
+      <div class="form-group">
+        <label for="keyword">Enter a keyword or phrase to search for videos</label>
+        <input type="text" class="form-control" id="keyword">
+        <b id="keyword-err"></b>
+        <input type="hidden" id="course-id" value={{course.id}}>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-lg-2">
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="search-results">
+  <!-- Videos will be rendered by JavaScript. -->
+  <!-- Each video will be rendered with an "Add to course" button. -->
+
+</div>
+<!-- </div> -->
+
+{% endblock %}
