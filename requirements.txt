@@ -1,4 +1,4 @@
-utopep8==1.5.4
+autopep8==1.5.4
 bcrypt==3.2.0
 blinker==1.4
 certifi==2020.11.8
